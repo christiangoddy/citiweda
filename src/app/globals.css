@@ -1,0 +1,48 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --max-width-p: 32px;
+}
+
+@screen md {
+  :root {
+    --max-width-p: 48px;
+  }
+}
+
+@screen lg {
+  :root {
+    --max-width-p: 64px;
+  }
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:focus {
+  -webkit-box-shadow: 0 0 0 1000px transparent inset;
+  transition:
+    background-color 32768s 0s,
+    color 32768s 0s;
+}
+
+input[data-autocompleted] {
+  background-color: transparent !important;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #261c30;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-track {
+  background-color: #06040d;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+}
