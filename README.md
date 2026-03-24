@@ -2,6 +2,8 @@
 
 A modern weather application that provides real-time weather information for cities around the world, with favorites management, detailed weather views, and offline capabilities.
 
+This project was enhanced as part of the Remote Hustle Developers Challenge (RHDC) – Improvement & Optimization Round, where the original codebase was analyzed, optimized, and upgraded with new improvements to make the application more scalable, maintainable, and production-ready.
+
 [![Next.js](https://img.shields.io/badge/Next.js-16-000000?style=flat-square&logo=next.js)](https://nextjs.org/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.8-3178C6?style=flat-square&logo=typescript)](https://www.typescriptlang.org/)
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-3.4-06B6D4?style=flat-square&logo=tailwindcss)](https://tailwindcss.com/)
@@ -25,30 +27,17 @@ A modern weather application that provides real-time weather information for cit
 
 ## Features
 
-- **City Listings**: Display weather information for the world's 15 largest cities sorted alphabetically
-- **Search System**: Find any city's weather data through the Weatherstack API
-- **Favorites Management**: Add/remove cities to a favorites list for quick access
-- **Detailed Weather Views**: Comprehensive weather information including temperature, wind, humidity, pressure, and visibility
-- **Notes System**: Add, edit, and save personal notes for each city
-- **Offline Support**: Cache weather data and user preferences in local storage for offline access
-- **Geolocation**: Automatic detection of user's location (with permission)
-- **Responsive Design**: Clean, modern UI that adapts to various screen sizes
-- **Data Persistence**: Local storage for user preferences, favorites, and notes
-- **Unit Testing**: Comprehensive Jest tests for components and functionality
-
-## Screenshots
-
-![Default Landing Page](public/screenshots/landing-page-without-faves.png)
-_Landing page showing a list of cities with weather information_
-
-![Updated Landing Page](public/screenshots/landing-page-with-faves.png)
-_Landing page with favorite cities section_
-
-![City Details Page](public/screenshots/city-details-without-notes.png)
-_Detailed weather information for a selected city_
-
-![City Details with Notes](public/screenshots/city-details-with-notes.png)
-_City weather details with user notes_
+Features
+City Listings: Display weather information for the world's largest cities
+City Search System: Search and add new cities dynamically
+Favorites Management: Add/remove cities to a favorites list for quick access
+Detailed Weather Views: Comprehensive weather information including temperature, wind, humidity, pressure, and visibility
+Notes System: Add, edit, and save personal notes for each city
+Offline Support: Cache weather data and user preferences in local storage for offline access
+Geolocation Detection: Automatically detect and display the user's city weather
+Responsive Design: Clean UI optimized for desktop, tablet, and mobile
+Persistent State: Favorites, notes, and weather data stored in local storage
+Weather Data Refreshing: Weather data automatically refreshes every 30 minutes
 
 ## Demo
 
@@ -60,7 +49,7 @@ A live demo of the application is available at [citiweda.vercel.app](https://cit
 - **Language**: [TypeScript 5.8](https://www.typescriptlang.org/)
 - **Styling**: [Tailwind CSS 3.4](https://tailwindcss.com/) (No UI frameworks)
 - **State Management**: [Zustand 5.0](https://github.com/pmndrs/zustand) with persist middleware
-- **API**: [Weatherstack](https://weatherstack.com/) for weather data
+- **API**: [Open-Meteo](https:Open-Meteo.com/) for weather data
 - **Testing**: [Jest 29.7](https://jestjs.io/) & [React Testing Library 16.2](https://testing-library.com/docs/react-testing-library/intro/)
 - **Browser APIs**: Geolocation API, Local Storage
 
@@ -71,9 +60,7 @@ src/
 ├── __tests__/                  # Test files
 │   └── components/             # Component tests
 ├── app/                        # Next.js app directory
-│   ├── city/[id]/              # Weather info page for a city
-│   ├── layout.tsx              # Root layout component
-│   └── page.tsx                # Landing page
+│   ├── city/[id]/              # Weather info page fo           # Landing page
 ├── components/                 # React components
 │   ├── CitiesSection.tsx       # Cities list component
 │   ├── CityTile.tsx            # Individual city card
@@ -110,12 +97,6 @@ src/
    yarn install
    ```
 
-2. Set up environment variables:
-   Create a `.env.local` file in the root directory with:
-
-   ```
-   NEXT_PUBLIC_WEATHERSTACK_API_KEY=your_api_key_here
-   ```
 
 3. Run the development server:
 
@@ -135,66 +116,97 @@ npm run build
 yarn build
 ```
 
-## Environment Variables
-
-| Variable                           | Description               | Required |
-| ---------------------------------- | ------------------------- | -------- |
-| `NEXT_PUBLIC_WEATHERSTACK_API_KEY` | Your Weatherstack API key | Yes      |
+     |
 
 ## Core Functionality
 
-### Weather API Integration
+### 
 
-The application integrates with the Weatherstack API to fetch real-time weather data. Weather information is cached in local storage to enable offline functionality and reduce API calls.
+RHDC Improvements (Stage 2 Enhancements)
 
-```typescript
-// Example of weather data retrieval
-const response = await fetch(
-  `https://api.weatherstack.com/current?access_key=${API_KEY}&query=${query}`
-);
-```
+As part of the Remote Hustle Developers Challenge, the assigned project was carefully reviewed and improved to enhance performance, usability, and scalability.
 
-### State Management
+Code Review & Analysis
 
-Zustand is used for state management with the persist middleware to save state in local storage:
+The following issues were identified in the original project:
 
-```typescript
-import { create } from 'zustand';
-import { persist } from 'zustand/middleware';
+Potential duplicate city entries when adding cities
+Weather API retry logic could cause unnecessary repeated calls
+UI structure lacked clarity in some components
+Some components contained redundant logic
+Limited weather information displayed on city cards
+Lack of documentation explaining architecture improvements
 
-// Main store initialization
-export const useMainStore = create<StoreState & StoreAction>()(
-  persist(
-    (setState, getState) => ({
-      // Store actions and state...
-    }),
-    {
-      name: 'main-store'
-    }
-  )
-);
-```
+### 
+Improvements Implemented
+1. Performance & Structure Improvements
+Improved Weather Data Refresh Logic
+
+Weather updates now only occur when data becomes stale (older than 30 minutes), reducing unnecessary API calls.
+
+Duplicate City Prevention
+
+Improved store logic to prevent adding the same city multiple times.
+
+Zustand Store Optimization
+
+The global store structure was reviewed and optimized to improve state handling for:
+
+favorites
+weather data
+cities
+notes
+
 
 ### Geolocation
 
 The app requests permission to access the user's location and automatically fetches weather for their current city:
 
-```typescript
-navigator.geolocation.getCurrentPosition(
-  async ({ coords: { latitude, longitude } }) => {
-    // Get weather for user's location
-  },
-  () => setState({ isPermissionDenied: true })
-);
-```
+
 
 ### Offline Support
 
 Data is persisted in local storage to provide functionality when offline:
 
-- Weather data is cached with timestamps
-- The app checks for stale data (older than 30 minutes) and refreshes when online
-- Favorites and notes are stored locally
+## Feature Enhancements
+
+Improved City Search & Add System
+
+Users can now easily search and add cities dynamically through the search bar.
+
+Enhanced Weather Information
+
+The weather details page now includes structured sections for:
+
+Actual temperature
+Feels-like temperature
+Wind speed
+Humidity
+Atmospheric pressure
+Visibility
+
+This provides richer weather insights to users.
+
+## UI / UX Refinements
+
+Several UI improvements were implemented:
+
+Improved weather card readability
+Clearer favorite icon behavior
+Better spacing and layout on weather cards
+Improved weather detail display
+Better visual structure for weather information
+
+## Product Readiness Improvements
+
+The project was prepared for real-world usage by ensuring:
+
+All routes work correctly
+No broken components
+Weather data loads properly
+Favorites and notes persist across reloads
+API requests are properly handled
+Responsive layout works across screen sizes
 
 ## Testing
 
@@ -243,7 +255,7 @@ This project is for educational purposes. All rights reserved.
 
 ## Acknowledgements
 
-- [Weatherstack API](https://weatherstack.com/) for weather data
+- [open-meteo API](https://Open-Meteo.com/) for weather data
 - [Zustand](https://github.com/pmndrs/zustand) for state management
 - [Tailwind CSS](https://tailwindcss.com/) for styling
 - [Next.js](https://nextjs.org/) for framework
