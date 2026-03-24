@@ -41,7 +41,7 @@ Weather Data Refreshing: Weather data automatically refreshes every 30 minutes
 
 ## Demo
 
-A live demo of the application is available at [citiweda.vercel.app](https://citiweda.vercel.app).
+A live demo of the application is available at [citiweda.vercel.app](https://citiweda-6s5c.vercel.app/).
 
 ## Technical Stack
 
